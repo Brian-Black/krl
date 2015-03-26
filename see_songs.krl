@@ -10,9 +10,10 @@ ruleset see_songs {
 
 	rule songs is active {
 		select when echo message 
-		if msg_type:song() then
+		if (msg_type:song) then {
 			send_directive("sing") with
 				song = "song";
+		}
 	}	
 }
 
