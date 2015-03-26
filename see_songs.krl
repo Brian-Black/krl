@@ -1,4 +1,4 @@
-ruleset see_songs{
+ruleset see_songs {
 	meta {
 		name "see_songs"
 		description <<
@@ -9,7 +9,7 @@ ruleset see_songs{
 	}
 
 	rule songs is active {
-		select when echo message input "(.*)" setting(m)
+		select when echo message input "(song)" setting(m)
 		send_directive("sing") with
 			song = m;
 	}	
