@@ -14,7 +14,7 @@ ruleset echo {
 			something = "Hello World";
 	}
 
-	rule message is active {x
+	rule message is active {
 		select when echo message input "(.*)" setting(m)
 		send_directive("say") with
 			something = m;

@@ -2,7 +2,7 @@ ruleset see_songs{
 	meta {
 		name "see_songs"
 		description <<
-			Doing a lab late
+			Doing a singing lab late
 		>>
 		author "Brian The Man Black"
 		logging on
