@@ -15,6 +15,20 @@ ruleset see_songs {
 				song = m;
 		}
 	}	
+
+	rule find_hymn is active {
+		select when explicit sung 
+		pre {
+			song = event:attr("song");
+		}
+		if (song.match(re#.*god.*#)) then {
+			noop();
+		}
+		fired {	
+			raise explicit event hymn_found
+			with hymn = song;
+		}
+	}
 }
 
 
