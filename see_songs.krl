@@ -21,7 +21,7 @@ ruleset see_songs {
 		pre {
 			s = event:attr("song");
 		}
-		if (s.match("god")) then {
+		if (s.match(re#i.*god.*#)) then {
 			noop();
 		}
 		fired {	
