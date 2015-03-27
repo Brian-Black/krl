@@ -9,10 +9,10 @@ ruleset see_songs {
 	}
 
 	rule songs is active {
-		select when echo message 
+		select when explicit sung input "(.*)" setting(m) 
 		if event:attr("msg_type").match("song") then {
 			send_directive("sing") with
-				song = "song";
+				song = m;
 		}
 	}	
 }
