@@ -9,8 +9,9 @@ ruleset song_store {
 	}
 
 	rule collect_songs is active {
-		select when explicit sung input "(.*)" setting(m) 
+		select when explicit sung 
 		pre {
+			m = event:attr("song");
 			songs = ent:played_songs || [];
 			new_array = songs.union(m).klog("value after song: ").head();
 		}
@@ -20,4 +21,22 @@ ruleset song_store {
 
 	}
 
+
+	rule collect_hymns is active {
+		select when explicit found_hymn 
+		pre {
+			m = event:attr("hymn");
+			hymns = ent:played_hymns || [];
+			new_array = hymns.union(m).klog("value after hymn: ").head();
+			
+		}
+		if (m.match(re#.*#)) then {
+			noop();
+		}
+		fired {
+			raise explicit event sung
+			with song = m;
+		}
+
+	}
 }
