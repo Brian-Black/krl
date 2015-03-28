@@ -13,10 +13,9 @@ ruleset song_store {
 		pre {
 			m = event:attr("song");
 			songs = ent:played_songs || [];
-			new_array = songs.union(m).klog("value after song: ").head();
 		}
 		always {
-			set ent:played_songs new_array if (not music.has(m))
+			set ent:played_songs new_array if (not music.has(m)).klog("value after addition: ").head();
 		}
 
 	}
