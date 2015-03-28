@@ -1,6 +1,6 @@
 ruleset song_store {
 	meta {
-		name "see_songs"
+		name "store"
 		description <<
 			Do you play Hearthstone? I CAN'T STOP TALKING ABOUT IT!
 		>>
