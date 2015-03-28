@@ -9,13 +9,13 @@ ruleset song_store {
 	}
 
 	rule collect_songs is active {
-		select when explicit sung input "(.*)" setting (song)
+		select when explicit sung input "(.*)" setting(m) 
 		pre {
 			songs = ent:played_songs || [];
-			new_array = songs.union(song)
+			new_array = songs.union(m)
 		}
 		always {
-			set ent:played_songs new_array if (not music.has(song))
+			set ent:played_songs new_array if (not music.has(m))
 		}
 
 	}
