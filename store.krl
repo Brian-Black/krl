@@ -12,7 +12,7 @@ ruleset song_store {
 		select when explicit sung input "(.*)" setting(m) 
 		pre {
 			songs = ent:played_songs || [];
-			new_array = songs.union(m)
+			new_array = songs.union(m).klog("value after song: ").head();
 		}
 		always {
 			set ent:played_songs new_array if (not music.has(m))
