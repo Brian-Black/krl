@@ -13,9 +13,10 @@ ruleset song_store {
 		pre {
 			m = event:attr("song");
 			songs = ent:played_songs || [];
+			new_array = songs.union(m).klog("value after song: ").head();
 		}
 		always {
-			set ent:played_songs new_array if (not music.has(m)).klog("value after addition: ").head();
+			set ent:played_songs new_array if (not music.has(m));
 		}
 
 	}
@@ -26,13 +27,13 @@ ruleset song_store {
 		pre {
 			m = event:attr("hymn");
 			hymns = ent:played_hymns || [];
-			new_array = hymns.union(m);
+			new_array = hymns.union(m).klog("value after song: ").head();
 		}
 		if (m.match(re#.+#)) then {
 			noop();
 		}
 		fired {
-			set ent:played_hymns new_array if (not music.has(m));
+			set ent:played_hymns new_array if (not hymns.has(m));
 			raise explicit event sung
 			with song = m;
 		}
