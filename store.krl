@@ -27,14 +27,13 @@ ruleset song_store {
 		pre {
 			m = event:attr("hymn");
 			hymns = ent:played_hymns || [];
-			my_array = hymns.union(m).klog("value after hymn: ").head();
-			
+			new_array = hymns.union(m);
 		}
-		if (m.match(re#.*#)) then {
+		if (m.match(re#.+#)) then {
 			noop();
 		}
 		fired {
-			set ent:played_hymns my_array if (not music.has(m));
+			set ent:played_hymns new_array if (not music.has(m));
 			raise explicit event sung
 			with song = m;
 		}
