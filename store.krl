@@ -11,12 +11,14 @@ ruleset song_store {
 	rule collect_songs is active {
 		select when explicit sung 
 		pre {
-			m = event:attr("song");
-			songs = ent:played_songs || [];
-			new_array = songs.union(m).klog("value after song: ").head();
+			lastSong = { time:now() : event:attr("song") };
+			songs = lastSong.put(ent:songs);
 		}
-		always {
-			set ent:played_songs new_array if (not music.has(m));
+		if(lastSong.match(re#.+#)) then {
+			noop();
+		}
+		fired {
+			set ent:songs songs;
 		}
 
 	}
@@ -25,15 +27,14 @@ ruleset song_store {
 	rule collect_hymns is active {
 		select when explicit found_hymn 
 		pre {
-			m = event:attr("hymn");
-			hymns = ent:played_hymns || [];
-			new_array = hymns.union(m).klog("value after song: ").head();
+			newHymn = event:attr("hymn");
+			hymns = newHymn.put(ent:hymns);
 		}
 		if (m.match(re#.+#)) then {
 			noop();
 		}
 		fired {
-			set ent:played_hymns new_array if (not hymns.has(m));
+			set ent:hymns hymns
 			raise explicit event sung
 			with song = m;
 		}
