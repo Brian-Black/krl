@@ -11,7 +11,7 @@ ruleset song_store {
 	rule collect_songs is active {
 		select when explicit sung 
 		pre {
-			lastSong = { time:now() : event:attr("song") };
+			lastSong = event:attr("song");
 			songs = lastSong.put(ent:songs);
 		}
 		if(lastSong.match(re#.+#)) then {
