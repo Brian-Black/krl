@@ -34,7 +34,7 @@ ruleset song_store {
 			noop();
 		}
 		fired {
-			set ent:hymns hymns
+			set ent:hymns hymns;
 			raise explicit event sung
 			with song = m;
 		}
