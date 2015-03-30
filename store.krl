@@ -6,19 +6,35 @@ ruleset song_store {
 		>>
 		author "Brian The Man Black"
 		logging on
+		storing on
+		provides songs, hymns, secular_music
+	}
+
+	global {
+		songs = function() {
+			ent:playedSongs;
+		};
+
+		hymns = function() {
+			ent:hymns;
+		};
+
+		secular_music = function() {
+			ent:playedSongs.difference(ent:hymns);
+		};
 	}
 
 	rule collect_songs is active {
 		select when explicit sung 
 		pre {
-			lastSong = event:attr("song");
-			songs = lastSong.put(ent:songs);
+			lastSong = {time:now() : event:attr("song")};
+			playedSongs = lastSong.put(ent:playedSongs);
 		}
 		if(lastSong.match(re#.+#)) then {
 			noop();
 		}
 		fired {
-			set ent:songs songs;
+			set ent:playedSongs playedSongs;
 		}
 
 	}
@@ -39,5 +55,13 @@ ruleset song_store {
 			with song = m;
 		}
 
+	}
+
+	rule clear_songs is active {
+		select when song reset
+		always {
+			clear ent:hymns;
+			clear ent:playedSongs;
+		}
 	}
 }
