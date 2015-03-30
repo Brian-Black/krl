@@ -7,7 +7,7 @@ ruleset song_store {
 		author "Brian The Man Black"
 		logging on
 		sharing on
-		provides songs, hymns, secular_music
+		provides songs, hymns
 	}
 
 	global {
@@ -20,7 +20,7 @@ ruleset song_store {
 		};
 
 		secular_music = function() {
-			ent:playedSongs.difference(ent:playedHymns);
+			ent:playedSongs.values().difference(ent:playedHymns);
 		};
 	}
 
