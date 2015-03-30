@@ -6,7 +6,7 @@ ruleset song_store {
 		>>
 		author "Brian The Man Black"
 		logging on
-		storing on
+		sharing on
 		provides songs, hymns, secular_music
 	}
 
