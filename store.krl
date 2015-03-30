@@ -16,11 +16,11 @@ ruleset song_store {
 		};
 
 		hymns = function() {
-			ent:hymns;
+			ent:playedHymns;
 		};
 
 		secular_music = function() {
-			ent:playedSongs.difference(ent:hymns);
+			ent:playedSongs.difference(ent:playedHymns);
 		};
 	}
 
@@ -44,13 +44,13 @@ ruleset song_store {
 		select when explicit found_hymn 
 		pre {
 			newHymn = event:attr("hymn");
-			hymns = newHymn.put(ent:hymns);
+			playedHymns = newHymn.put(ent:playedHymns);
 		}
 		if (m.match(re#.+#)) then {
 			noop();
 		}
 		fired {
-			set ent:hymns hymns;
+			set ent:playedHymns playedHymns;
 			raise explicit event sung
 			with song = m;
 		}
